@@ -15,13 +15,12 @@ GREEN = (0, 255, 0)
 class Grid:
     last_change = None
 
-    def __init__(self, game, size,board):
+    def __init__(self, game, size, board):
         self.game = game
         self.board = board
         self.size = size
         self.cubes = self.create_cubes()
         self.selected = None
-
 
     def solve(self):
         aux = SudokuSolver.solver(self.board)
@@ -49,6 +48,7 @@ class Grid:
         square = self.cubes[self.selected[0]][self.selected[1]]
         if not square.initial:
             square.value = 0
+            square.temp = 0
             square.final = False
             self.board[square.row][square.col] = 0
 
@@ -183,10 +183,12 @@ def draw(game, board, time):
     board.draw()
     pygame.display.update()
 
+
 def start():
     level = int(input("Escoja un nivel de 1 a 3: "))
     board = SudokuDownloader.create(level)
     return board
+
 
 def main():
     global FONT
